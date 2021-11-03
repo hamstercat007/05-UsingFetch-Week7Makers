@@ -6,14 +6,17 @@
   // fetchGithubRepo.js
   var require_fetchGithubRepo = __commonJS({
     "fetchGithubRepo.js"(exports, module) {
-      var repoName = "sinatra/sinatra";
-      var fetchGithubRepo2 = fetch(`https://api.github.com/repos/${repoName}`).then((response) => response.json()).then((jsonData) => {
-        console.log(jsonData);
-      });
+      var fetchGithubRepo2 = (repoName, onDataFetched) => {
+        fetch("https://api.github.com/repos/" + repoName).then((response) => response.json()).then(onDataFetched);
+      };
       module.exports = fetchGithubRepo2;
     }
   });
 
   // index.js
   var fetchGithubRepo = require_fetchGithubRepo();
+  fetchGithubRepo("sinatra/sinatra", (repoData) => {
+    console.log(repoData);
+    document.write(JSON.stringify(repoData));
+  });
 })();
